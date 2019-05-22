@@ -7,9 +7,9 @@
 
 ```js
 Promise.all(
-  [...document.querySelectorAll("a")]
-    .filter(e => e.href && e.href.length > 0 && e.href.match(location.origin))
-    .map(e => fetch(e.href))
+  [...new Set([...document.querySelectorAll("a")]
+    .filter(e => e.href && e.href.length > 0 && e.href.match(location.origin)))]
+    .map(e => fetch(e))
 )
 .then(rs =>
   rs.map(e => console.log(`${e.url}: "success";`))
@@ -21,5 +21,5 @@ Promise.all(
 
 ### for chrome bookmark
 ```js
-javascript:Promise.all([...document.querySelectorAll("a")].filter(e=>e.href&&e.href.length>0&&e.href.match(location.origin)).map(e=>fetch(e.href))).then(rs=>rs.map(e=>console.log(`${e.url}: "success";`))).catch(rs=>rs.map(e=>console.log(`${e.url}: "fail";`)))
+javascript:Promise.all([...new Set([...document.querySelectorAll("a")].filter(e=>e.href&&e.href.length>0&&e.href.match(location.origin)))].map(e=>fetch(e))).then(rs=>rs.map(e=>console.log(`${e.url}: "success";`))).catch(rs=>rs.map(e=>console.log(`${e.url}: "fail";`)));
 ```
